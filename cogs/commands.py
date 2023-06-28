@@ -20,6 +20,7 @@ class commandos(commands.Cog):
         asyncio.run_coroutine_threadsafe(
             self.httpSession.close(), self.bot.loop
         )        
+        print("[Info] closed http session")
 
     @commands.command()
     async def r(self, ctx: commands.Context, arg = ""):
@@ -38,13 +39,15 @@ class commandos(commands.Cog):
         if not mentio and message:
             return await ctx.send("Say what??")
         
-        if not fnmatch.filter(mentio.split(" "), '<@*>'):
+        mention = re.match(r"<@([\d]+)>", mentio)
+        
+        if not mention:
             message = f'{mentio} {message}'
             imitate = ctx.message.author.id
         else:
-            imitate = int(''.join(re.findall(r'\d+', mentio)))
+            imitate = mention.group(1)
 
-        member = ctx.guild.get_member(imitate)
+        member = await ctx.guild.fetch_member(imitate)
         webhook = await ctx.channel.create_webhook(name=member.display_name)
         await webhook.send(
             message,

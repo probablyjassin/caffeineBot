@@ -1,4 +1,4 @@
-from auth import reddit
+from reddit import reddit
 from discord.ext import commands
 
 class ping(commands.Cog):

@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from auth import os, reddit
+from reddit import os, reddit
 
 intents = discord.Intents().all()
 owners = [769525682039947314]

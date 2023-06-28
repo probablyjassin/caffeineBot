@@ -1,7 +1,7 @@
 import os
 import discord
 from discord.ext import commands
-from auth import reddit
+from reddit import reddit
 import fnmatch
 import re
 import aiohttp

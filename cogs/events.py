@@ -26,5 +26,6 @@ class events(commands.Cog):
             await message.channel.send(get(message.guild.emojis, name='om'))
         if "ripbozo" in message.content.lower():
             await message.channel.send(get(message.guild.emojis, name='RIPBOZO'))
+
 def setup(bot: commands.Bot):
     bot.add_cog(events(bot))

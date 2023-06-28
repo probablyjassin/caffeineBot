@@ -17,7 +17,7 @@ class admin(commands.Cog):
             self.bot.reload_extension(f'cogs.{filename}')
         await ctx.message.add_reaction("🤙")
 
-    @commands.command()
+    @commands.command(aliases = ['shut', 'close'])
     @commands.is_owner()
     async def shutdown(self, ctx):
         await ctx.send("Shutting down... Goodbye!")

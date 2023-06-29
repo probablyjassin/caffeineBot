@@ -2,7 +2,6 @@ import os
 import discord
 from discord.ext import commands
 from reddit import reddit
-import fnmatch
 import re
 import aiohttp
 import asyncio
@@ -62,22 +61,31 @@ class commandos(commands.Cog):
         key = os.getenv('QUOTES_APIKEY')
         quoteTitle = str
         quoteAuthor = str
-        if category.lower() != "undertale":
-            category = '?category=' + category.lower()
-            try:
-                async with self.httpSession.get(f"https://api.api-ninjas.com/v1/quotes{category}",
-                                        headers = {'X-Api-Key': key}) as resp:
-                    if resp.status == 200:
-                        quoteTitle = (await resp.json())[0]["quote"]
-                        quoteAuthor = (await resp.json())[0]["author"]
-            except Exception as err:   
-                await ctx.send(embed = discord.Embed(description = f"That didn't work\n{err}"))
-        else:
+        if category.lower() == "undertale":
             with open("./files/undertale.json") as file:
                 data = json.load(file)
                 quote = random.choice(data)
                 quoteTitle = quote["quote"]
                 quoteAuthor = quote["author"]
+                return (
+                    await ctx.send(embed = discord.Embed(
+                        title = quoteTitle,
+                        description = quoteAuthor,
+                        color=ctx.author.color))
+                )
+        async with self.httpSession.get(f"https://api.api-ninjas.com/v1/quotes{category}",
+            headers = {'X-Api-Key': key},
+            params = {"category": category.lower()}
+            ) as resp:
+            content = await resp.json()
+        if not content:
+            return (
+                await ctx.send(embed = discord.Embed(
+                    description = "That didn't work\n Are you sure you typed a valid category?"
+                ))
+            )
+        quoteTitle = content[0]["quote"]
+        quoteAuthor = content[0]["author"]
         await ctx.send(embed = discord.Embed(title = quoteTitle, description = quoteAuthor, color=ctx.author.color))
 
     @commands.command(hidden=True)

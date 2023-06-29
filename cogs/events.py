@@ -1,4 +1,6 @@
 import os
+import sys
+import traceback
 from discord.ext import commands
 from discord.utils import get
 import discord

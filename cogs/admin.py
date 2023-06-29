@@ -11,16 +11,17 @@ class admin(commands.Cog):
     async def reload(self, ctx: commands.Context, filename = ""):
         if not filename:
             for filename in os.listdir('./cogs'):
-                if filename.endswith('.py'):
-                    self.bot.reload_extension(f'cogs.{filename[:-3]}')
-        else:
-            self.bot.reload_extension(f'cogs.{filename}')
-        await ctx.message.add_reaction("🤙")
+                if not filename.endswith('.py'): continue
+                self.bot.reload_extension(f'cogs.{filename[:-3]}')
+                return await ctx.message.add_reaction("🤙")
+                
+        self.bot.reload_extension(f'cogs.{filename}')
+        return await ctx.message.add_reaction("🤙")
+        
 
     @commands.command(aliases = ['shut', 'close'])
     @commands.is_owner()
     async def shutdown(self, ctx):
-        await ctx.send("Shutting down... Goodbye!")
         await self.bot.close()
 
 def setup(bot: commands.Bot):

@@ -14,6 +14,7 @@ class customBot(commands.Bot):
             cog._eject(self)
             print(f"Ejected {name}")
         await reddit.close()
+        await self.ctx.send("Shutting down... Goodbye!")
         await super().close()
 
 bot = customBot(

@@ -73,9 +73,10 @@ class commandos(commands.Cog):
                         description = quoteAuthor,
                         color=ctx.author.color))
                 )
-        async with self.httpSession.get(f"https://api.api-ninjas.com/v1/quotes{category}",
+        category = f'?category={category}'
+        async with self.httpSession.get(f"https://api.api-ninjas.com/v1/quotes{category.lower()}",
             headers = {'X-Api-Key': key},
-            params = {"category": category.lower()}
+            #params = {"category": category.lower()}
             ) as resp:
             content = await resp.json()
         if not content:

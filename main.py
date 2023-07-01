@@ -14,24 +14,19 @@ class customBot(commands.Bot):
             cog._eject(self)
             print(f"Ejected {name}")
         await reddit.close()
-        await self.ctx.send("Shutting down... Goodbye!")
         await super().close()
 
 bot = customBot(
     command_prefix=".", case_insensitive = True, help_command = None,
     intents=intents, owner_ids = set(owners), 
-    status=discord.Status.online, activity=discord.Game('deez nuts')
+    status=discord.Status.online, activity=discord.Game('(speedrunning)')
 )
 
-for filename in os.listdir('./cogs'):
-    if filename.endswith('.py'):
-        bot.load_extension(f'cogs.{filename[:-3]}')
+def loadcogs():
+    for filename in os.listdir('./cogs'):
+        if filename.endswith('.py'):
+            bot.load_extension(f'cogs.{filename[:-3]}')
+loadcogs()
 
 bot.run(os.getenv('DISCORD_TOKEN'))
-    
-# so hat's vorher funktioniert
-# @bot.event 
-# async def on_command_error(ctx, error): 
-#     if isinstance(error, commands.CommandNotFound): 
-#         await ctx.send(embed = discord.Embed(description=f"Command not found.", color=ctx.author.color))
 

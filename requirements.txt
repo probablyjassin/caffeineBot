@@ -1,4 +1,4 @@
-git+https://github.com/Pycord-Development/pycord==py-cord-2.4.1.dev137+gfa25ccb2
-praw
+#git+https://github.com/Pycord-Development/pycord==py-cord-2.4.1.dev137+gfa25ccb2
+discord==v1.7.3
 python-dotenv
 asyncpraw

@@ -9,7 +9,7 @@ load_dotenv()
 reddit = praw.Reddit(
     client_id = os.getenv('CLIENT_ID'),
     client_secret = os.getenv('CLIENT_SECRET'),
-    username = os.getenv('USER'),
-    password = os.getenv('PASSWORD'),
+    username = os.getenv('RDTUSER'),
+    password = os.getenv('RDTPASSWORD'),
     user_agent = os.getenv('USER_AGENT')
 )

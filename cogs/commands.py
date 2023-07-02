@@ -23,13 +23,15 @@ class commandos(commands.Cog):
 
     @commands.command()
     async def r(self, ctx: commands.Context, arg = ""):
-        if not arg:
-            return await ctx.send("Pick a subreddit")
-        try:
-            subreddit = await reddit.subreddit(arg)
-            submission = random.choice([meme async for meme in subreddit.hot(limit=50)])
-        except:
-            return await ctx.send("That subreddit does not exist")
+        async with ctx.typing():
+            if not arg:
+                return await ctx.send("Pick a subreddit")
+            try:
+                subreddit = await reddit.subreddit(arg)
+                submission = random.choice([meme async for meme in subreddit.hot(limit=50)])
+            except:
+                return await ctx.send("That subreddit does not exist")
+            await asyncio.sleep(0.1)
         await ctx.send(submission.title)
         await ctx.send(submission.url)
 
@@ -91,16 +93,16 @@ class commandos(commands.Cog):
 
     @commands.command(hidden=True)
     async def henti(self, ctx: commands.Context, type = 'sfw', category = "neko"):
-            async def neko(type, category):
-                async with self.httpSession.get(f'https://api.waifu.pics/{type}/{category}') as response:
-                    await ctx.send((await response.json())["url"])
-            if type not in ["sfw", "nsfw"]:
-                category = type
-                type = 'sfw'
-            try:
-                await neko(type, category)
-            except:
-                await neko(type, "neko")
+        async def neko(type, category):
+            async with self.httpSession.get(f'https://api.waifu.pics/{type}/{category}') as response:
+                await ctx.send((await response.json())["url"])
+        if type not in ["sfw", "nsfw"]:
+            category = type
+            type = 'sfw'
+        try:
+            await neko(type, category)
+        except:
+            await neko(type, "neko")
 
     @commands.command()
     async def clear(self, ctx: commands.Context, lim = 2):

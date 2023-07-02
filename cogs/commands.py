@@ -12,8 +12,7 @@ class commandos(commands.Cog):
     def __init__(self, bot):
         self.bot: commands.Bot = bot
         self.httpSession = aiohttp.ClientSession()
-        print("[Info] created http session")        # MACH EINFACH LOGGING BRO
-                                                    # NICHT PSEUDO LOGGING!!!
+        print("[Info] created http session")
 
     def cog_unload(self):
         asyncio.run_coroutine_threadsafe(
@@ -39,57 +38,56 @@ class commandos(commands.Cog):
     async def say(self, ctx: commands.Context, mentio, *, message = ""):
         if not mentio and message:
             return await ctx.send("Say what??")
-        
         mention = re.match(r"<@([\d]+)>", mentio)
-        
         if not mention:
             message = f'{mentio} {message}'
             imitate = ctx.message.author.id
         else:
             imitate = mention.group(1)
-
         member = await ctx.guild.fetch_member(imitate)
-        webhook = await ctx.channel.create_webhook(name=member.display_name)
+        webhook = await ctx.channel.create_webhook(name=member.display_name) 
         await webhook.send(
             message,
-            username=member.display_name,
-            avatar_url=member.display_avatar.url
+            username=member.display_name, #this still does not work properly
+            avatar_url=member.avatar_url
         )
         await webhook.delete()
         await ctx.message.delete()
 
     @commands.command()
     async def quote(self, ctx: commands.Context, category = ""):
-        key = os.getenv('QUOTES_APIKEY')
-        quoteTitle = str
-        quoteAuthor = str
-        if category.lower() == "undertale":
-            with open("./files/undertale.json") as file:
-                data = json.load(file)
-                quote = random.choice(data)
-                quoteTitle = quote["quote"]
-                quoteAuthor = quote["author"]
+        async with ctx.typing():
+            key = os.getenv('QUOTES_APIKEY')
+            quoteTitle = str
+            quoteAuthor = str
+            if category.lower() == "undertale":
+                with open("./files/undertale.json") as file:
+                    data = json.load(file)
+                    quote = random.choice(data)
+                    quoteTitle = quote["quote"]
+                    quoteAuthor = quote["author"]
+                    return (
+                        await ctx.send(embed = discord.Embed(
+                            title = quoteTitle,
+                            description = quoteAuthor,
+                            color=ctx.author.color))
+                    )
+            category = f'?category={category}'
+            async with self.httpSession.get(f"https://api.api-ninjas.com/v1/quotes{category.lower()}",
+                headers = {'X-Api-Key': key},
+                #params = {"category": category.lower()}
+                ) as resp:
+                content = await resp.json()
+            if not content:
                 return (
                     await ctx.send(embed = discord.Embed(
-                        title = quoteTitle,
-                        description = quoteAuthor,
-                        color=ctx.author.color))
+                        description = "That didn't work\n Are you sure you typed a valid category?"
+                    ))
                 )
-        category = f'?category={category}'
-        async with self.httpSession.get(f"https://api.api-ninjas.com/v1/quotes{category.lower()}",
-            headers = {'X-Api-Key': key},
-            #params = {"category": category.lower()}
-            ) as resp:
-            content = await resp.json()
-        if not content:
-            return (
-                await ctx.send(embed = discord.Embed(
-                    description = "That didn't work\n Are you sure you typed a valid category?"
-                ))
-            )
-        quoteTitle = content[0]["quote"]
-        quoteAuthor = content[0]["author"]
-        await ctx.send(embed = discord.Embed(title = quoteTitle, description = quoteAuthor, color=ctx.author.color))
+            quoteTitle = content[0]["quote"]
+            quoteAuthor = content[0]["author"]
+            await ctx.send(embed = discord.Embed(title = quoteTitle, description = quoteAuthor, color=ctx.author.color))
+        await asyncio.sleep(0.1)
 
     @commands.command(hidden=True)
     async def henti(self, ctx: commands.Context, type = 'sfw', category = "neko"):

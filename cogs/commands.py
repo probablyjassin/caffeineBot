@@ -48,7 +48,7 @@ class commandos(commands.Cog):
         webhook = await ctx.channel.create_webhook(name=member.display_name) 
         await webhook.send(
             message,
-            username=member.display_name, #this still does not work properly
+            username=member.display_name,
             avatar_url=member.avatar_url
         )
         await webhook.delete()
@@ -81,7 +81,7 @@ class commandos(commands.Cog):
             if not content:
                 return (
                     await ctx.send(embed = discord.Embed(
-                        description = "That didn't work\n Are you sure you typed a valid category?"
+                        description = "That didn't work\n Are you sure you used a valid category?"
                     ))
                 )
             quoteTitle = content[0]["quote"]

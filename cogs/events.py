@@ -28,8 +28,8 @@ class events(commands.Cog):
             await message.channel.send(get(message.guild.emojis, name='om'))
         if "ripbozo" in message.content.lower():
             await message.channel.send(get(message.guild.emojis, name='RIPBOZO'))
-        if "monkaomega" in message.content.lower():
-            await message.channel.send(get(message.guild.emojis, name='monkaOMEGA'))
+        if "monkagiga" in message.content.lower():
+            await message.channel.send(get(message.guild.emojis, name='monkaGIGA'))
 
 def setup(bot: commands.Bot):
     bot.add_cog(events(bot))

@@ -49,7 +49,7 @@ class commandos(commands.Cog):
         await webhook.send(
             message,
             username=member.display_name,
-            avatar_url=member.avatar_url
+            avatar_url=member.display_avatar.url
         )
         await webhook.delete()
         await ctx.message.delete()

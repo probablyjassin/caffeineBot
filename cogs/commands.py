@@ -108,9 +108,19 @@ class commandos(commands.Cog):
 
     @commands.command()
     async def test(self, ctx: commands.Context):
-
-        gif_data = webp_to_gif("https://cdn.7tv.app/emote/60ae958e229664e8667aea38/4x.webp")
-        await ctx.send(file=discord.File(gif_data, 'animated_image.gif'))
+        frames = webp_to_gif("https://cdn.7tv.app/emote/60ae958e229664e8667aea38/4x.webp")
+        gif_filename = 'animated_image.gif'
+        with BytesIO() as gif_buffer:
+            frames[0].save(
+                gif_buffer,
+                format='GIF',
+                append_images=frames[1:],
+                save_all=True,
+                duration=100,
+                loop=0
+            )
+            gif_buffer.seek(0)
+            await ctx.send(file=discord.File(gif_buffer, gif_filename))
 
 from PIL import Image
 import requests
@@ -121,12 +131,15 @@ def webp_to_gif(webp_url):
     webp_image = Image.open(BytesIO(response.content))
 
     # Convert the image to gif in memory
-    gif_image = webp_image.convert('RGBA')
-    gif_data = BytesIO()
-    gif_image.save(gif_data, 'GIF')
-    gif_data.seek(0)
-    
-    return gif_data
+    frames = []
+    for frame in range(webp_image.n_frames):
+        webp_image.seek(frame)
+        frame_data = BytesIO()
+        webp_image.save(frame_data, 'GIF')
+        frame_data.seek(0)
+        frames.append(frame_data)
+
+    return frames
 
 def setup(bot: commands.Bot):
     bot.add_cog(commandos(bot))

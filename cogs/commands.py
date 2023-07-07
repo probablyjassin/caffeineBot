@@ -116,7 +116,7 @@ class commandos(commands.Cog):
             first_frame.save(
                 gif_buffer,
                 format='GIF',
-                append_images=frames[1:],
+                append_images=[frame for frame in frames[1:]],
                 save_all=True,
                 duration=100,
                 loop=0
@@ -127,20 +127,20 @@ class commandos(commands.Cog):
 from PIL import Image
 import requests
 from io import BytesIO
+from PIL import Image, ImageSequence
 
 def webp_to_gif(webp_url):
     response = requests.get(webp_url)
     webp_image = Image.open(BytesIO(response.content))
-
-    # Convert the image to gif in memory
+    
+    # Extract frames from the webp image
     frames = []
-    for frame in range(webp_image.n_frames):
-        webp_image.seek(frame)
+    for frame in ImageSequence.Iterator(webp_image):
         frame_data = BytesIO()
-        webp_image.save(frame_data, 'GIF')
+        frame.save(frame_data, format='GIF')
         frame_data.seek(0)
         frames.append(frame_data)
-
+    
     return frames
 
 def setup(bot: commands.Bot):

@@ -7,6 +7,11 @@ import aiohttp
 import asyncio
 import random
 import json
+from PIL import Image
+import requests
+import io
+from io import BytesIO
+from PIL import Image, ImageSequence
 
 class commandos(commands.Cog):
     def __init__(self, bot):
@@ -105,43 +110,6 @@ class commandos(commands.Cog):
     @commands.command()
     async def clear(self, ctx: commands.Context, lim = 2):
         await ctx.channel.purge(limit=lim)
-
-    @commands.command()
-    async def test(self, ctx: commands.Context):
-        frames = webp_to_gif("https://cdn.7tv.app/emote/60ae958e229664e8667aea38/4x.webp")
-        gif_filename = 'animated_image.gif'
-        with BytesIO() as gif_buffer:
-            frames[0].seek(0)
-            first_frame = Image.open(frames[0])
-            first_frame.save(
-                gif_buffer,
-                format='GIF',
-                append_images=frames[1:],
-                save_all=True,
-                duration=100,
-                loop=0
-            )
-            gif_buffer.seek(0)
-            await ctx.send(file=discord.File(gif_buffer, gif_filename))
-
-from PIL import Image
-import requests
-from io import BytesIO
-from PIL import Image, ImageSequence
-
-def webp_to_gif(webp_url):
-    response = requests.get(webp_url)
-    webp_image = Image.open(BytesIO(response.content))
-    
-    # Extract frames from the webp image
-    frames = []
-    for frame in ImageSequence.Iterator(webp_image):
-        frame_data = BytesIO()
-        frame.save(frame_data, format='GIF')
-        frame_data.seek(0)
-        frames.append(frame_data)
-    
-    return frames
 
 def setup(bot: commands.Bot):
     bot.add_cog(commandos(bot))

@@ -11,7 +11,7 @@ class help(commands.Cog):
         embed = discord.Embed(
             title = f'{bot.display_name} - commands',
         )
-        embed.set_thumbnail(url="https://cdn.7tv.app/emote/60ae958e229664e8667aea38/4x.webp")
+        embed.set_thumbnail(url=bot.display_avatar)
         embed.add_field(
             name="ping", 
             value="respond with pong", inline=False

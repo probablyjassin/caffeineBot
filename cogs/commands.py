@@ -106,5 +106,27 @@ class commandos(commands.Cog):
     async def clear(self, ctx: commands.Context, lim = 2):
         await ctx.channel.purge(limit=lim)
 
+    @commands.command()
+    async def test(self, ctx: commands.Context):
+
+        gif_data = webp_to_gif("https://cdn.7tv.app/emote/60ae958e229664e8667aea38/4x.webp")
+        await ctx.send(file=discord.File(gif_data, 'animated_image.gif'))
+
+from PIL import Image
+import requests
+from io import BytesIO
+
+def webp_to_gif(webp_url):
+    response = requests.get(webp_url)
+    webp_image = Image.open(BytesIO(response.content))
+
+    # Convert the image to gif in memory
+    gif_image = webp_image.convert('RGBA')
+    gif_data = BytesIO()
+    gif_image.save(gif_data, 'GIF')
+    gif_data.seek(0)
+    
+    return gif_data
+
 def setup(bot: commands.Bot):
     bot.add_cog(commandos(bot))

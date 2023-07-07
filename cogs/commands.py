@@ -111,7 +111,9 @@ class commandos(commands.Cog):
         frames = webp_to_gif("https://cdn.7tv.app/emote/60ae958e229664e8667aea38/4x.webp")
         gif_filename = 'animated_image.gif'
         with BytesIO() as gif_buffer:
-            frames[0].save(
+            frames[0].seek(0)
+            first_frame = Image.open(frames[0])
+            first_frame.save(
                 gif_buffer,
                 format='GIF',
                 append_images=frames[1:],

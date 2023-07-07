@@ -112,6 +112,7 @@ class commandos(commands.Cog):
         gif_filename = 'animated_image.gif'
         with BytesIO() as gif_buffer:
             frames[0].seek(0)
+            first_frame = Image.open(frames[0])
             first_frame.save(
                 gif_buffer,
                 format='GIF',

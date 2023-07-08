@@ -112,9 +112,12 @@ class commandos(commands.Cog):
 
     @commands.command()
     async def emote(self, ctx: commands.Context, query = ""):
-        if not query:
-            return await ctx.send(random.choice(await self.tv.emote_search(random.choice(string.ascii_letters), limit=40)).host_url+'/3x.webp')
-        await ctx.send(random.choice(await self.tv.emote_search(query, limit=30)).host_url+'/3x.webp')
+        try: # ja aktuell try:catch block weil es so oft zu fucking errors kommt
+            if not query:
+                return await ctx.send("https:"+random.choice(await self.tv.emote_search(random.choice(string.ascii_letters), limit=5)).host_url+'/2x.webp')
+            await ctx.send("https:"+random.choice(await self.tv.emote_search(query, limit=40)).host_url+'/2x.webp')
+        except Exception as error:
+            print(f'Ich liebe es dass discord keine webp animations akzeptiert\n{error}')
 
     @commands.command()
     async def clear(self, ctx: commands.Context, lim = 2):

@@ -7,11 +7,6 @@ import aiohttp
 import asyncio
 import random
 import json
-from PIL import Image
-import requests
-import io
-from io import BytesIO
-from PIL import Image, ImageSequence
 
 class commandos(commands.Cog):
     def __init__(self, bot):

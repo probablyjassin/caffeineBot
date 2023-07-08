@@ -7,18 +7,26 @@ import aiohttp
 import asyncio
 import random
 import json
+import seventv
+import string
 
 class commandos(commands.Cog):
     def __init__(self, bot):
         self.bot: commands.Bot = bot
         self.httpSession = aiohttp.ClientSession()
-        print("[Info] created http session")
+        print("Created http session")
+        self.tv = seventv.seventv()
+        print("Created 7tv session")
 
     def cog_unload(self):
         asyncio.run_coroutine_threadsafe(
             self.httpSession.close(), self.bot.loop
-        )        
-        print("[Info] closed http session")
+        ) 
+        print("Closed http session")
+        asyncio.run_coroutine_threadsafe(
+            self.tv.close(), self.bot.loop
+        )
+        print("Closed 7tv session")
 
     @commands.command()
     async def r(self, ctx: commands.Context, arg = ""):
@@ -101,6 +109,12 @@ class commandos(commands.Cog):
             await neko(type, category)
         except:
             await neko(type, "neko")
+
+    @commands.command()
+    async def emote(self, ctx: commands.Context, query = ""):
+        if not query:
+            return await ctx.send(random.choice(await self.tv.emote_search(random.choice(string.ascii_letters), limit=40)).host_url+'/3x.webp')
+        await ctx.send(random.choice(await self.tv.emote_search(query, limit=30)).host_url+'/3x.webp')
 
     @commands.command()
     async def clear(self, ctx: commands.Context, lim = 2):

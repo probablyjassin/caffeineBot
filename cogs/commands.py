@@ -113,8 +113,15 @@ class commandos(commands.Cog):
     @commands.command()
     async def emote(self, ctx: commands.Context, query = ""):
         if not query:
-            return await ctx.send("https:"+random.choice(await self.tv.emote_search(random.choice(string.ascii_letters), limit=100)).host_url+'/2x.gif')
-        await ctx.send("https:"+random.choice(await self.tv.emote_search(query, limit=40)).host_url+'/2x.gif')
+            url = "https:"+random.choice(await self.tv.emote_search(random.choice(string.ascii_letters), limit=100, query="url")).host_url
+        else:
+            url = "https:"+random.choice(await self.tv.emote_search(query, limit=20, query="url")).host_url
+
+        async with self.httpSession.get(f'{url}/2x.gif') as response:
+            if response.status != 200:
+                return await ctx.send(f'{url}/2x.webp')
+            await ctx.send(f'{url}/2x.gif')
+
 
     @commands.command()
     async def clear(self, ctx: commands.Context, lim = 2):

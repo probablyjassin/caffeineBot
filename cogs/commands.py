@@ -117,11 +117,13 @@ class commandos(commands.Cog):
         else:
             url = "https:"+random.choice(await self.tv.emote_search(searchterm=query, limit=20, query="url")).host_url
 
-        async with self.httpSession.get(f'{url}/2x.gif') as response:
-            if response.status != 200:
-                return await ctx.send(f'{url}/2x.png')
-            await ctx.send(f'{url}/2x.gif')
-
+        try:
+            async with self.httpSession.get(f'{url}/2x.gif') as response:
+                if response.status != 200:
+                    return await ctx.send(f'{url}/2x.png')
+                await ctx.send(f'{url}/2x.gif')
+        except Exception as error:
+            await ctx.send(error)
 
     @commands.command()
     async def clear(self, ctx: commands.Context, lim = 2):

@@ -9,7 +9,13 @@ class events(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx: commands.Context, error): 
         if isinstance(error, commands.CommandNotFound): 
-            await ctx.send(embed = discord.Embed(description=f"Command not found.", color=ctx.author.color))
+            await ctx.send(embed = discord.Embed(description="Command not found.", color=ctx.author.color))
+        elif isinstance(error, Exception):
+            if "Rate Limit Reached" in error:
+                await ctx.send(embed = discord.Embed(description="Rate Limit Reached", color=ctx.author.color))
+            if "IndexError" in error:
+                await ctx.send(embed = discord.Embed(description="No results found!", color=ctx.author.color))
+            print(error)
         else:
             print(f"oh nein error und schlecht formatted weil ich will hja nicht gute logs: \n{error} \n")
 

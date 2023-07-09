@@ -111,7 +111,7 @@ class commandos(commands.Cog):
             await neko(type, "neko")
 
     @commands.command()
-    async def emote(self, ctx: commands.Context, query = ""):
+    async def emote(self, ctx: commands.Context, *, query = ""):
         if not query:
             url = "https:"+random.choice(await self.tv.emote_search(random.choice(string.ascii_letters), limit=100, query="url")).host_url
         else:

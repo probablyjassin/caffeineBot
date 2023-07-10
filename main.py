@@ -19,7 +19,7 @@ class customBot(commands.Bot):
 bot = customBot(
     command_prefix=".", case_insensitive = True, help_command = None,
     intents=intents, owner_ids = set(owners), 
-    status=discord.Status.online, activity=discord.Game('(speedrunning)')
+    status=discord.Status.online, activity=discord.Streaming('ones and zeroes')
 )
 
 for filename in os.listdir('./cogs'):

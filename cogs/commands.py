@@ -119,7 +119,7 @@ class commandos(commands.Cog):
             data = await self.tv.emote_search(query, limit, query="url")
         except seventvException	as error:
             await ctx.send("https://cdn.7tv.app/emote/6250b5ea2667140c8cedd1e9/2x.gif")
-            return await ctx.send(embed = discord.Embed(description=re.sub(r'\d+', '', error), color=ctx.author.color))
+            return await ctx.send(embed = discord.Embed(description=re.sub(r'\d+', '', str(error)), color=ctx.author.color))
         if not data:
             await ctx.send("https://cdn.7tv.app/emote/60abf171870d317bef23d399/2x.gif")
             return await ctx.send(embed = discord.Embed(description="I didn't find any emotes", color=ctx.author.color))

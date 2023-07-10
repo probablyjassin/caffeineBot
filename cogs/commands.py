@@ -112,14 +112,17 @@ class commandos(commands.Cog):
 
     @commands.command()
     async def emote(self, ctx: commands.Context, *, query: str = ""):
-        if not query:
-            url = "https:"+random.choice(await self.tv.emote_search(searchterm=random.choice(string.ascii_letters), limit=100, query="url")).host_url
-        else:
-            url = "https:"+random.choice(await self.tv.emote_search(searchterm=query, limit=20, query="url")).host_url
+        limit = 100 if not query else 20
+        if not query: query = random.choice(string.ascii_letters)
+        data = await self.tv.emote_search(query, limit, query="url")
+        if not data:
+            await ctx.send("https://cdn.7tv.app/emote/60abf171870d317bef23d399/2x.gif")
+            return await ctx.send(embed = discord.Embed(description="I didn't find any emotes", color=ctx.author.color))
+        url = f'https:{random.choice(data).host_url}'
         async with self.httpSession.get(f'{url}/2x.gif') as response:
             if response.status != 200:
                 return await ctx.send(f'{url}/2x.png')
-            await ctx.send(f'{url}/2x.gif')
+            await ctx.send(f'{url}/2x.gif')        
 
     @commands.command()
     async def clear(self, ctx: commands.Context, lim = 2):

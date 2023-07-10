@@ -122,7 +122,7 @@ class commandos(commands.Cog):
         async with self.httpSession.get(f'{url}/2x.gif') as response:
             if response.status != 200:
                 return await ctx.send(f'{url}/2x.png')
-            await ctx.send(f'{url}/2x.gif')        
+            await ctx.send(f'{url}/2x.gif')
 
     @commands.command()
     async def clear(self, ctx: commands.Context, lim = 2):

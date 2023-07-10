@@ -8,6 +8,7 @@ import asyncio
 import random
 import json
 import seventv
+from seventv.seventv import seventvException
 import string
 
 class commandos(commands.Cog):
@@ -114,7 +115,11 @@ class commandos(commands.Cog):
     async def emote(self, ctx: commands.Context, *, query: str = ""):
         limit = 100 if not query else 20
         if not query: query = random.choice(string.ascii_letters)
-        data = await self.tv.emote_search(query, limit, query="url")
+        try:
+            data = await self.tv.emote_search(query, limit, query="url")
+        except seventvException	as error:
+            await ctx.send("https://cdn.7tv.app/emote/6250b5ea2667140c8cedd1e9/2x.gif")
+            return await ctx.send(embed = discord.Embed(description=re.sub(r'\d+', '', error), color=ctx.author.color))
         if not data:
             await ctx.send("https://cdn.7tv.app/emote/60abf171870d317bef23d399/2x.gif")
             return await ctx.send(embed = discord.Embed(description="I didn't find any emotes", color=ctx.author.color))

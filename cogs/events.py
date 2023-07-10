@@ -1,6 +1,8 @@
 from discord.ext import commands
 from discord.utils import get
 import discord
+from seventv.seventv import seventvException
+import re
 
 class events(commands.Cog):
     def __init__(self, bot):
@@ -10,8 +12,8 @@ class events(commands.Cog):
     async def on_command_error(self, ctx: commands.Context, error): 
         if isinstance(error, commands.CommandNotFound): 
             await ctx.send(embed = discord.Embed(description="Command not found.", color=ctx.author.color))
-        elif isinstance(error, Exception):
-            await ctx.send(embed = discord.Embed(description=error, color=ctx.author.color))
+        elif isinstance(error, seventvException):
+            await ctx.send(embed = discord.Embed(description=re.sub(r'\d+', '', error), color=ctx.author.color))
         else:
             print(f"oh nein error und schlecht formatted weil ich will hja nicht gute logs: \n{error} \n")
 

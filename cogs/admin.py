@@ -1,4 +1,6 @@
 import os
+import sys
+import subprocess
 from discord.ext import commands
 
 class admin(commands.Cog):
@@ -17,6 +19,14 @@ class admin(commands.Cog):
         self.bot.reload_extension(f'cogs.{filename}')
         return await ctx.message.add_reaction("🤙")
         
+    @commands.command()
+    @commands.is_owner()
+    async def reboot(self, ctx: commands.Context):
+        await ctx.send("Rebooting....")
+        python = sys.executable
+        subprocess.call([python, sys.argv[0]])
+        await ctx.send("Back up!")
+        sys.exit()
 
     @commands.command(aliases = ['shut', 'close'])
     @commands.is_owner()

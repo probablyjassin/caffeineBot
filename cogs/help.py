@@ -53,17 +53,17 @@ class help(commands.Cog):
         bot = ctx.guild.get_member(self.bot.user.id)
         embed = discord.Embed(
             title = f'{bot.display_name} - commands',
-            description = "Check out help.\{command\} for more details"
+            description = f'For detailed explanations: \n help.{{command}}'
         )
         embed.set_thumbnail(url=bot.display_avatar)
         embed.add_field(
             name = "Commands:", 
-            value = f'''
-                ping \n
-                say \n
-                r (reddit) \n
-                quote \n
-                emote \n
+            value = f''' \n
+                ping
+                say
+                r (reddit)
+                quote
+                emote
                 henti
             '''
         )

@@ -13,7 +13,7 @@ class admin(commands.Cog):
         if not filename:
             for filename in os.listdir('./cogs'):
                 if filename.endswith('.py'):
-                    self.bot.load_extension(f'cogs.{filename[:-3]}')
+                    self.bot.reload_extension(f'cogs.{filename[:-3]}')
                     return await ctx.message.add_reaction("🤙")
         self.bot.reload_extension(f'cogs.{filename}')
         return await ctx.message.add_reaction("🤙")

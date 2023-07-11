@@ -12,10 +12,9 @@ class admin(commands.Cog):
     async def reload(self, ctx: commands.Context, filename = ""):
         if not filename:
             for filename in os.listdir('./cogs'):
-                if not filename.endswith('.py'): continue
-                self.bot.reload_extension(f'cogs.{filename[:-3]}')
-                return await ctx.message.add_reaction("🤙")
-                
+                if filename.endswith('.py'):
+                    self.bot.load_extension(f'cogs.{filename[:-3]}')
+                    return await ctx.message.add_reaction("🤙")
         self.bot.reload_extension(f'cogs.{filename}')
         return await ctx.message.add_reaction("🤙")
         

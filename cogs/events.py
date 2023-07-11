@@ -29,6 +29,13 @@ class events(commands.Cog):
             await message.channel.send(get(message.guild.emojis, name='RIPBOZO'))
         if "monkagiga" in message.content.lower():
             await message.channel.send(get(message.guild.emojis, name='monkaGIGA'))
+        if "bavardage" in message.content.lower():
+            with open("./files/bavardage.txt", "r") as counter:
+                count = int(counter.read()) + 1
+            with open("./files/bavardage.txt", "w") as counter:
+                counter.write(str(count))
+            await message.channel.send(f'{count} typos have been reported to the BavardagePolice')
+            await message.channel.send("https://cdn.7tv.app/emote/630f73b6c7b627ebb036e7ee/2x.gif")
 
 def setup(bot: commands.Bot):
     bot.add_cog(events(bot))

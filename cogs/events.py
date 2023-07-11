@@ -17,15 +17,18 @@ class events(commands.Cog):
     async def on_message(self, message: discord.Message):
         if message.author.bot:
             return
+        for emoji in ['balls', 'ball', 'om', 'RIPBOZO', 'monkaGIGA']:
+            if emoji.lower() in message.content.lower():
+                emoji_obj = get(message.guild.emojis, name=emoji)
+                break
+        for emoji in ['om']:
+            if emoji in message.content.lower().split(" "):
+                emoji_obj = get(message.guild.emojis, name=emoji)
+                break
         try:
-            for emoji in ['balls', 'ball', 'om', 'RIPBOZO', 'monkaGIGA']:
-                if emoji.lower() in message.content.lower():
-                    return await message.channel.send(get(message.guild.emojis, name=emoji))
-            for emoji in ['om']:
-                if emoji in message.content.lower().split(" "):
-                    return await message.channel.send(get(message.guild.emojis, name=emoji))
+            await message.channel.send(emoji_obj)
         except discord.errors.HTTPException:
-            print() # Emote not on server, ignore
+            "# Emoji not on server, ignore"
 
         if "bavardage" in message.content.lower():
             with open("./files/bavardage.txt", "r") as counter:

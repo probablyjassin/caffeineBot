@@ -35,8 +35,9 @@ class commandos(commands.Cog):
             if not arg:
                 return await ctx.send("Pick a subreddit")
             try:
-                subreddit = await reddit.subreddit(arg)
+                subreddit: reddit.subreddit = await reddit.subreddit(arg)
                 submission = random.choice([meme async for meme in subreddit.hot(limit=50)])
+                if submission.over_18 and not ctx.channel.is_nsfw(): await ctx.send("We don't do that here, use an nsfw channel for that.")
             except:
                 return await ctx.send("That subreddit does not exist")
             await asyncio.sleep(0.1)
@@ -84,7 +85,6 @@ class commandos(commands.Cog):
             category = f'?category={category}'
             async with self.httpSession.get(f"https://api.api-ninjas.com/v1/quotes{category.lower()}",
                 headers = {'X-Api-Key': key},
-                #params = {"category": category.lower()}
                 ) as resp:
                 content = await resp.json()
             if not content:
@@ -100,6 +100,8 @@ class commandos(commands.Cog):
 
     @commands.command(hidden=True)
     async def henti(self, ctx: commands.Context, type = 'sfw', category = "neko"):
+        if type == 'nsfw' and not ctx.channel.is_nsfw():
+            return await ctx.send("W- What are you trying to do? Do that in an nsfw channel you weirdo!")
         async def neko(type, category):
             async with self.httpSession.get(f'https://api.waifu.pics/{type}/{category}') as response:
                 await ctx.send((await response.json())["url"])

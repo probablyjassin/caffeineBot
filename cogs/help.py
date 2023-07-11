@@ -19,9 +19,9 @@ class help(commands.Cog):
         ))
 
     @commands.command()
-    async def help_r(self, ctx: commands.Context):
+    async def help_rdt(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
-            title="r \{subreddit\}", 
+            title="rdt \{subreddit\}", 
             description="Get a reddit post from a subreddit of your choice"
         ))
 
@@ -61,7 +61,7 @@ class help(commands.Cog):
             value = f'''
             ping
             say
-            r (reddit)
+            rdt (reddit)
             quote
             emote
             henti

@@ -22,13 +22,14 @@ class admin(commands.Cog):
     @commands.is_owner()
     async def reboot(self, ctx: commands.Context):
         await ctx.send("Rebooting...")
+        await ctx.message.add_reaction("🤙")
         python = sys.executable
         subprocess.call([python, sys.argv[0]])
         sys.exit()
 
     @commands.command(aliases = ['shut', 'close'])
     @commands.is_owner()
-    async def shutdown(self, ctx):
+    async def shutdown(self):
         await self.bot.close()
 
 def setup(bot: commands.Bot):

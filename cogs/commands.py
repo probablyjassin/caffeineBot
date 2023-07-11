@@ -30,7 +30,7 @@ class commandos(commands.Cog):
         print("Closed 7tv session")
 
     @commands.command()
-    async def r(self, ctx: commands.Context, arg = ""):
+    async def rdt(self, ctx: commands.Context, arg = ""):
         async with ctx.typing():
             if not arg:
                 return await ctx.send("Pick a subreddit")

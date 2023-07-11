@@ -33,7 +33,7 @@ class help(commands.Cog):
             "Categories include undertale, as well as these: https://api-ninjas.com/api/quotes"
         ))
 
-     @commands.command(name = "help_henti")
+    @commands.command(name = "help_henti")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="henti \{rating, category\} (optional)", 

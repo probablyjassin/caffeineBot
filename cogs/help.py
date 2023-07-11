@@ -58,7 +58,8 @@ class help(commands.Cog):
         embed.set_thumbnail(url=bot.display_avatar)
         embed.add_field(
             name = "Commands:", 
-            value = f''' \n
+            value = f'''
+                \n
                 ping
                 say
                 r (reddit)

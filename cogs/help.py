@@ -53,7 +53,7 @@ class help(commands.Cog):
         bot = ctx.guild.get_member(self.bot.user.id)
         embed = discord.Embed(
             title = f'{bot.display_name} - commands',
-            description = f'For detailed explanations: \n help.{{command}}'
+            description = f'For detailed explanations use \n {self.bot.command_prefix}help.{{command}}'
         )
         embed.set_thumbnail(url=bot.display_avatar)
         embed.add_field(

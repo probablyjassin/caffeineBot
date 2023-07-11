@@ -1,8 +1,6 @@
 from discord.ext import commands
 from discord.utils import get
 import discord
-from seventv.seventv import seventvException
-import re
 
 class events(commands.Cog):
     def __init__(self, bot):
@@ -19,13 +17,15 @@ class events(commands.Cog):
     async def on_message(self, message: discord.Message):
         if message.author.bot:
             return
-
-        for emote in ['balls', 'ball', 'om', 'RIPBOZO', 'monkaGIGA']:
-            if emote.lower() in message.content.lower():
-                return await message.channel.send(get(message.guild.emojis, name=emote))
-        for emote in ['om']:
-            if emote in message.content.lower().split(" "):
-                return await message.channel.send(get(message.guild.emojis, name=emote))
+        try:
+            for emoji in ['balls', 'ball', 'om', 'RIPBOZO', 'monkaGIGA']:
+                if emoji.lower() in message.content.lower():
+                    return await message.channel.send(get(message.guild.emojis, name=emoji))
+            for emoji in ['om']:
+                if emoji in message.content.lower().split(" "):
+                    return await message.channel.send(get(message.guild.emojis, name=emoji))
+        except discord.errors.HTTPException:
+            print() # Emote not on server, ignore
 
         if "bavardage" in message.content.lower():
             with open("./files/bavardage.txt", "r") as counter:

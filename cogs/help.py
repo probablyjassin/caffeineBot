@@ -59,7 +59,7 @@ class help(commands.Cog):
         embed.add_field(
             name = "Commands:", 
             value = f'''
-                \n
+                ⠀
                 ping
                 say
                 r (reddit)

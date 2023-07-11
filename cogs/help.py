@@ -33,20 +33,20 @@ class help(commands.Cog):
             "Categories include undertale, as well as these: https://api-ninjas.com/api/quotes"
         ))
 
-    @commands.command(name = "help_emote")
-    async def helpi(self, ctx: commands.Context):
-        await ctx.send(embed = discord.Embed(
-            title="emote \{name\} (optional)", 
-            description="Search for 7tv emotes or get a random one!"
-        ))
-
-    @commands.command(name = "help_henti")
+     @commands.command(name = "help_henti")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="henti \{rating, category\} (optional)", 
             description="Get an some anime imagery. If unspecified, get an sfw catgirl. Optionally use nsfw and/or request a category. " +
             "Will use default if category is invalid. List of categories: https://pypi.org/project/WaifuPicsPython/"
         ))  
+
+    @commands.command(name = "help_emote")
+    async def helpi(self, ctx: commands.Context):
+        await ctx.send(embed = discord.Embed(
+            title="emote \{name\} (optional)", 
+            description="Search for 7tv emotes or get a random one!"
+        ))
 
     @commands.command()
     async def help(self, ctx: commands.Context):

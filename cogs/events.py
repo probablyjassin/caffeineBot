@@ -19,16 +19,14 @@ class events(commands.Cog):
     async def on_message(self, message: discord.Message):
         if message.author.bot:
             return
-        if "balls" in message.content.lower():
-            await message.channel.send(get(message.guild.emojis, name='balls'))
-        elif "ball" in message.content.lower():
-            await message.channel.send(get(message.guild.emojis, name='ball'))
-        if "om" in (message.content.lower()).split(" "):
-            await message.channel.send(get(message.guild.emojis, name='om'))
-        if "ripbozo" in message.content.lower():
-            await message.channel.send(get(message.guild.emojis, name='RIPBOZO'))
-        if "monkagiga" in message.content.lower():
-            await message.channel.send(get(message.guild.emojis, name='monkaGIGA'))
+
+        for emote in ['balls', 'ball', 'om', 'RIPBOZO', 'monkaGIGA']:
+            if emote.lower() in message.content.lower():
+                return await message.channel.send(get(message.guild.emojis, name=emote))
+        for emote in ['om']:
+            if emote in message.content.lower().split(" "):
+                return await message.channel.send(get(message.guild.emojis, name=emote))
+
         if "bavardage" in message.content.lower():
             with open("./files/bavardage.txt", "r") as counter:
                 count = int(counter.read()) + 1

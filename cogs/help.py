@@ -5,27 +5,27 @@ class help(commands.Cog):
     def __init__(self, bot):
         self.bot: commands.Bot = bot
 
-    @commands.command(name = "help.ping")
+    @commands.command(name = "help-ping")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             description = 'Bro "ping" "pong" was ist daran so schwer'
         ))
 
-    @commands.command(name = "help.say")
+    @commands.command(name = "help-say")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="say \{user to imitate (optional), message\}", 
             description="Sends a message of the provided text, as the user to imitate (if given)."
         ))
 
-    @commands.command(name = "help.r")
+    @commands.command(name = "help-r")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="r \{subreddit\}", 
             description="Get a reddit post from a subreddit of your choice"
         ))
 
-    @commands.command(name = "help.quote")
+    @commands.command(name = "help-quote")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="quote \{category\} (optional)", 
@@ -33,14 +33,14 @@ class help(commands.Cog):
             "Categories include undertale, as well as these: https://api-ninjas.com/api/quotes"
         ))
 
-    @commands.command(name = "help.emote")
+    @commands.command(name = "help-emote")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="emote \{name\} (optional)", 
             description="Search for 7tv emotes or get a random one!"
         ))
 
-    @commands.command(name = "help.henti")
+    @commands.command(name = "help-henti")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="henti \{rating, category\} (optional)", 

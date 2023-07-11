@@ -37,7 +37,7 @@ class commandos(commands.Cog):
             try:
                 subreddit: reddit.subreddit = await reddit.subreddit(arg)
                 submission = random.choice([meme async for meme in subreddit.hot(limit=50)])
-                if submission.over_18 and not ctx.channel.is_nsfw(): await ctx.send("We don't do that here, use an nsfw channel for that.")
+                if submission.over_18 and not ctx.channel.is_nsfw(): return await ctx.send("We don't do that here, use an nsfw channel for that.")
             except:
                 return await ctx.send("That subreddit does not exist")
             await asyncio.sleep(0.1)

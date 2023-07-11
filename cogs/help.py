@@ -57,22 +57,15 @@ class help(commands.Cog):
         )
         embed.set_thumbnail(url=bot.display_avatar)
         embed.add_field(
-            name="ping"
-        )
-        embed.add_field(
-            name="say"
-        )
-        embed.add_field(
-            name="r (reddit)", 
-        )
-        embed.add_field(
-            name="quote", 
-        )
-        embed.add_field(
-            name="emote", 
-        )
-        embed.add_field(
-            name="henti", 
+            name = "Commands:", 
+            value = f'''
+                ping \n
+                say \n
+                r (reddit) \n
+                quote \n
+                emote \n
+                henti
+            '''
         )
         await ctx.send(embed = embed)
         

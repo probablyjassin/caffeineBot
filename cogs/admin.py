@@ -22,10 +22,9 @@ class admin(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def reboot(self, ctx: commands.Context):
-        await ctx.send("Rebooting....")
+        await ctx.send("Rebooting...")
         python = sys.executable
         subprocess.call([python, sys.argv[0]])
-        await ctx.send("Back up!")
         sys.exit()
 
     @commands.command(aliases = ['shut', 'close'])

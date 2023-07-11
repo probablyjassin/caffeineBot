@@ -5,27 +5,27 @@ class help(commands.Cog):
     def __init__(self, bot):
         self.bot: commands.Bot = bot
 
-    @commands.command(name = "help-ping")
+    @commands.command(name = "help_ping")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             description = 'Bro "ping" "pong" was ist daran so schwer'
         ))
 
-    @commands.command(name = "help-say")
+    @commands.command(name = "help_say")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="say \{user to imitate (optional), message\}", 
             description="Sends a message of the provided text, as the user to imitate (if given)."
         ))
 
-    @commands.command(name = "help-r")
+    @commands.command(name = "help_r")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="r \{subreddit\}", 
             description="Get a reddit post from a subreddit of your choice"
         ))
 
-    @commands.command(name = "help-quote")
+    @commands.command(name = "help_quote")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="quote \{category\} (optional)", 
@@ -33,14 +33,14 @@ class help(commands.Cog):
             "Categories include undertale, as well as these: https://api-ninjas.com/api/quotes"
         ))
 
-    @commands.command(name = "help-emote")
+    @commands.command(name = "help_emote")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="emote \{name\} (optional)", 
             description="Search for 7tv emotes or get a random one!"
         ))
 
-    @commands.command(name = "help-henti")
+    @commands.command(name = "help_henti")
     async def helpi(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="henti \{rating, category\} (optional)", 
@@ -53,7 +53,7 @@ class help(commands.Cog):
         bot = ctx.guild.get_member(self.bot.user.id)
         embed = discord.Embed(
             title = f'{bot.display_name} - commands',
-            description = f'For detailed explanations use \n {self.bot.command_prefix}help.{{command}}'
+            description = f'For detailed explanations use\n{self.bot.command_prefix}help_{{command}}'
         )
         embed.set_thumbnail(url=bot.display_avatar)
         embed.add_field(

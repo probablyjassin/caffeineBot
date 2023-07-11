@@ -5,44 +5,44 @@ class help(commands.Cog):
     def __init__(self, bot):
         self.bot: commands.Bot = bot
 
-    @commands.command(name = "help_ping")
-    async def helpi(self, ctx: commands.Context):
+    @commands.command()
+    async def help_ping(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             description = 'Bro "ping" "pong" was ist daran so schwer'
         ))
 
-    @commands.command(name = "help_say")
-    async def helpi(self, ctx: commands.Context):
+    @commands.command()
+    async def help_say(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="say \{user to imitate (optional), message\}", 
             description="Sends a message of the provided text, as the user to imitate (if given)."
         ))
 
-    @commands.command(name = "help_r")
-    async def helpi(self, ctx: commands.Context):
+    @commands.command()
+    async def help_r(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="r \{subreddit\}", 
             description="Get a reddit post from a subreddit of your choice"
         ))
 
-    @commands.command(name = "help_quote")
-    async def helpi(self, ctx: commands.Context):
+    @commands.command()
+    async def help_quote(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="quote \{category\} (optional)", 
             description="Get a quote, optionally with a category. " +
             "Categories include undertale, as well as these: https://api-ninjas.com/api/quotes"
         ))
 
-    @commands.command(name = "help_henti")
-    async def helpi(self, ctx: commands.Context):
+    @commands.command()
+    async def help_henti(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="henti \{rating, category\} (optional)", 
             description="Get an some anime imagery. If unspecified, get an sfw catgirl. Optionally use nsfw and/or request a category. " +
             "Will use default if category is invalid. List of categories: https://pypi.org/project/WaifuPicsPython/"
         ))  
 
-    @commands.command(name = "help_emote")
-    async def helpi(self, ctx: commands.Context):
+    @commands.command()
+    async def help_emote(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="emote \{name\} (optional)", 
             description="Search for 7tv emotes or get a random one!"

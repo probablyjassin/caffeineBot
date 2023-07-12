@@ -18,11 +18,11 @@ class events(commands.Cog):
         if message.author.bot:
             return
         emoji_obj = ""
-        for emoji in ['balls', 'ball', 'ba', 'RIPBOZO', 'monkaGIGA']:
+        for emoji in ['balls', 'ball', 'RIPBOZO', 'monkaGIGA']:
             if emoji.lower() in message.content.lower():
                 emoji_obj = get(message.guild.emojis, name=emoji)
                 break
-        for emoji in ['om']:
+        for emoji in ['om', 'ba']:
             if emoji.lower() in message.content.lower().split(" "):
                 emoji_obj = get(message.guild.emojis, name=emoji)
                 break

@@ -17,6 +17,7 @@ class events(commands.Cog):
     async def on_message(self, message: discord.Message):
         if message.author.bot:
             return
+        emoji_obj = ""
         for emoji in ['balls', 'ball', 'om', 'RIPBOZO', 'monkaGIGA']:
             if emoji.lower() in message.content.lower():
                 emoji_obj = get(message.guild.emojis, name=emoji)

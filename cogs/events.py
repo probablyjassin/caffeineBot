@@ -29,7 +29,7 @@ class events(commands.Cog):
         try:
             await message.channel.send(emoji_obj)
         except discord.errors.HTTPException:
-            "# Emoji not on server, ignore"
+            "# Emoji not on this server, ignore"
 
         if "bavardage" in message.content.lower():
             with open("./files/bavardage.txt", "r") as counter:

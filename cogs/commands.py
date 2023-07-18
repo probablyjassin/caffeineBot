@@ -138,11 +138,11 @@ class commandos(commands.Cog):
 
     @commands.command()
     async def hot(self, ctx: commands.Context):
-        process = subprocess.Popen("vcgencmd measure_temp", stdout=subprocess.PIPE, shell=True)
-        output, _ = process.communicate()  # Ignore error output
-        temp = output.decode("utf-8").split("=")[1].strip()
-        await ctx.send(f"Pretty toasty, I'm sitting at about {temp}")
-
+        output, _ = subprocess.Popen("vcgencmd measure_temp", stdout=subprocess.PIPE, shell=True).communicate()
+        temp = float(re.match(output.decode("utf-8"), "\d+\.\d+"))
+        if temp >= 50: await ctx.send(f"Pretty toasty, I'm sitting at about {temp}°C")
+        if temp <= 40: await ctx.send(f"Wow, {temp}°C that's quite cool")
+        else: await ctx.send(f"{temp}°C, that's pretty ok")
 
 def setup(bot: commands.Bot):
     bot.add_cog(commandos(bot))

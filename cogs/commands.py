@@ -139,9 +139,10 @@ class commandos(commands.Cog):
     @commands.command()
     async def hot(self, ctx: commands.Context):
         process = subprocess.Popen("vcgencmd measure_temp", stdout=subprocess.PIPE, shell=True)
-        output = process.communicate()
-        temp = output.split("=")[1]
+        output, _ = process.communicate()  # Ignore error output
+        temp = output.decode("utf-8").split("=")[1].strip()
         await ctx.send(f"Pretty toasty, I'm sitting at about {temp}")
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(commandos(bot))

@@ -10,6 +10,7 @@ import json
 import seventv
 from seventv.seventv import seventvException
 import string
+import subprocess
 
 class commandos(commands.Cog):
     def __init__(self, bot):
@@ -133,7 +134,14 @@ class commandos(commands.Cog):
 
     @commands.command()
     async def clear(self, ctx: commands.Context, lim = 2):
-        await ctx.channel.purge(limit=lim)
+        await ctx.channel.purge(limit=lim +1)
+
+    @commands.command()
+    async def hot(self, ctx: commands.Context):
+        process = subprocess.Popen("vcgencmd measure_temp", stdout=subprocess.PIPE, shell=True)
+        output = process.communicate().decode("utf-8")
+        temp = output.split("=")[1]
+        await ctx.send(f"Pretty toasty, I'm sitting at about {temp}")
 
 def setup(bot: commands.Bot):
     bot.add_cog(commandos(bot))

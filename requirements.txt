@@ -1,4 +1,5 @@
 git+https://github.com/Pycord-Development/pycord
+pynacl
 seventv
 aiohttp
 python-dotenv

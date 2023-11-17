@@ -1,7 +1,10 @@
 import os
 import discord
+from discord import VoiceClient
 from discord.ext import commands
+from discord.utils import get
 from reddit import reddit
+from pytube import YouTube
 import re
 import aiohttp
 import asyncio
@@ -143,6 +146,46 @@ class commandos(commands.Cog):
         if temp >= 50: return await ctx.send(f"Pretty toasty, I'm sitting at about {temp}°C")
         elif temp <= 40: await ctx.send(f"Wow, {temp}°C that's quite cool")
         else: await ctx.send(f"{temp}°C, that's pretty ok")
+
+    @commands.command()
+    async def join(self, ctx: commands.Context):
+        voice_channel = ctx.author.voice.channel
+        await voice_channel.connect()
+
+    @commands.command()
+    async def play(self, ctx: commands.Context, url):
+        try:
+            yt = YouTube(str(url))
+
+            video_url = yt.streams.filter(only_audio=True).first().url
+            
+            voice_client: VoiceClient = ctx.voice_client
+            if not voice_client:
+                return await ctx.send("I'm not in a VC, RIPBOZO")
+
+            voice_client.play(discord.FFmpegPCMAudio(video_url), after=lambda e: print("done"))
+            """ asyncio.run_coroutine_threadsafe(voice_client.disconnect(), voice_client.loop) """
+
+        except Exception as e:
+            await ctx.send("Either invalid or unavailable, do you have SKILLISSUE?")
+
+    @commands.command()
+    async def stop(self, ctx: commands.Context):
+        voice_channel: VoiceClient = ctx.voice_client
+        
+        if voice_channel:
+            await voice_channel.pause()
+        else:
+            await ctx.send("I'm not in a VC, RIPBOZO")
+
+    @commands.command()
+    async def leave(self, ctx: commands.Context):
+        voice_channel: VoiceClient = ctx.voice_client
+        
+        if voice_channel:
+            await voice_channel.disconnect()
+        else:
+            await ctx.send("I'm not in a VC, RIPBOZO")
 
 def setup(bot: commands.Bot):
     bot.add_cog(commandos(bot))

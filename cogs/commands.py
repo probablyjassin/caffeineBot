@@ -148,34 +148,5 @@ class commandos(commands.Cog):
         elif temp <= 40: await ctx.send(f"Wow, {temp}°C that's quite cool")
         else: await ctx.send(f"{temp}°C, that's pretty ok")
 
-    @commands.command()
-    async def test(self, ctx: commands.Context, *, message = ""):
-        """ 
-        POST https://shalee-gpt35.hf.space/api/openai/v1/chat/completions
-
-json
-
-
-        """
-        url = 'https://shalee-gpt35.hf.space/api/openai/v1/chat/completions'
-        headers = {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer YOUR_API_KEY'  # Replace with your API key
-        }
-
-        response = requests.post(url, headers=headers, json={"messages":[{"role":"user","content":"send a 3 word response"}],"stream":"true","model":"gpt-3.5-turbo","temperature":0.5,"presence_penalty":0,"frequency_penalty":0,"top_p":1})
-
-        if response.status_code == 200:
-            for chunk in response.iter_lines():
-                if chunk:
-                    # Assuming the chunks are in JSON format
-                    data = json.loads(chunk)
-                    if 'delta' in data and 'content' in data['delta']:
-                        word = data['delta']['content']
-                        print(f"Word: {word}")
-        else:
-            print(f"Error: {response.status_code}, {response.text}")
-            await ctx.send(f"test deez nuts {message}")
-
 def setup(bot: commands.Bot):
     bot.add_cog(commandos(bot))

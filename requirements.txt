@@ -4,3 +4,4 @@ seventv
 aiohttp
 python-dotenv
 asyncpraw
+pytube

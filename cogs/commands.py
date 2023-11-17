@@ -1,4 +1,5 @@
 import os
+import requests
 import discord
 from discord import VoiceClient
 from discord.ext import commands
@@ -148,44 +149,33 @@ class commandos(commands.Cog):
         else: await ctx.send(f"{temp}°C, that's pretty ok")
 
     @commands.command()
-    async def join(self, ctx: commands.Context):
-        voice_channel = ctx.author.voice.channel
-        await voice_channel.connect()
+    async def test(self, ctx: commands.Context, *, message = ""):
+        """ 
+        POST https://shalee-gpt35.hf.space/api/openai/v1/chat/completions
 
-    @commands.command()
-    async def play(self, ctx: commands.Context, url):
-        try:
-            yt = YouTube(str(url))
+json
 
-            video_url = yt.streams.filter(only_audio=True).first().url
-            
-            voice_client: VoiceClient = ctx.voice_client
-            if not voice_client:
-                return await ctx.send("I'm not in a VC, RIPBOZO")
 
-            voice_client.play(discord.FFmpegPCMAudio(video_url), after=lambda e: print("done"))
-            """ asyncio.run_coroutine_threadsafe(voice_client.disconnect(), voice_client.loop) """
+        """
+        url = 'https://shalee-gpt35.hf.space/api/openai/v1/chat/completions'
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer YOUR_API_KEY'  # Replace with your API key
+        }
 
-        except Exception as e:
-            await ctx.send("Either invalid or unavailable, do you have SKILLISSUE?")
+        response = requests.post(url, headers=headers, json={"messages":[{"role":"user","content":"send a 3 word response"}],"stream":"true","model":"gpt-3.5-turbo","temperature":0.5,"presence_penalty":0,"frequency_penalty":0,"top_p":1})
 
-    @commands.command()
-    async def stop(self, ctx: commands.Context):
-        voice_channel: VoiceClient = ctx.voice_client
-        
-        if voice_channel:
-            await voice_channel.pause()
+        if response.status_code == 200:
+            for chunk in response.iter_lines():
+                if chunk:
+                    # Assuming the chunks are in JSON format
+                    data = json.loads(chunk)
+                    if 'delta' in data and 'content' in data['delta']:
+                        word = data['delta']['content']
+                        print(f"Word: {word}")
         else:
-            await ctx.send("I'm not in a VC, RIPBOZO")
-
-    @commands.command()
-    async def leave(self, ctx: commands.Context):
-        voice_channel: VoiceClient = ctx.voice_client
-        
-        if voice_channel:
-            await voice_channel.disconnect()
-        else:
-            await ctx.send("I'm not in a VC, RIPBOZO")
+            print(f"Error: {response.status_code}, {response.text}")
+            await ctx.send(f"test deez nuts {message}")
 
 def setup(bot: commands.Bot):
     bot.add_cog(commandos(bot))

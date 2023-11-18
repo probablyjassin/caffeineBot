@@ -103,21 +103,6 @@ class commandos(commands.Cog):
             await ctx.send(embed = discord.Embed(title = quoteTitle, description = quoteAuthor, color=ctx.author.color))
         await asyncio.sleep(0.1)
 
-    @commands.command(hidden=True)
-    async def henti(self, ctx: commands.Context, type = 'sfw', category = "neko"):
-        if type == 'nsfw' and not ctx.channel.is_nsfw():
-            return await ctx.send("W- What are you trying to do? Do that in an nsfw channel you weirdo!")
-        async def neko(type, category):
-            async with self.httpSession.get(f'https://api.waifu.pics/{type}/{category}') as response:
-                await ctx.send((await response.json())["url"])
-        if type not in ["sfw", "nsfw"]:
-            category = type
-            type = 'sfw'
-        try:
-            await neko(type, category)
-        except:
-            await neko(type, "neko")
-
     @commands.command()
     async def emote(self, ctx: commands.Context, *, query: str = ""):
         limit = 100 if not query else 20

@@ -34,14 +34,6 @@ class help(commands.Cog):
         ))
 
     @commands.command()
-    async def help_henti(self, ctx: commands.Context):
-        await ctx.send(embed = discord.Embed(
-            title="henti \{rating, category\} (optional)", 
-            description="Get an some anime imagery. If unspecified, get an sfw catgirl. Optionally use nsfw and/or request a category. " +
-            "Will use default if category is invalid. List of categories: https://pypi.org/project/WaifuPicsPython/"
-        ))  
-
-    @commands.command()
     async def help_emote(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
             title="emote \{name\} (optional)", 
@@ -64,7 +56,6 @@ class help(commands.Cog):
             rdt (reddit)
             quote
             emote
-            henti
             '''
         )
         await ctx.send(embed = embed)

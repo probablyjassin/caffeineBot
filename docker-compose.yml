@@ -8,3 +8,4 @@ services:
       - ./cogs:/cogs
     env_file:
       - .env
+    command: ["python", "main.py"]

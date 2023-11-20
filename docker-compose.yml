@@ -1,0 +1,10 @@
+version: '3'
+services:
+  caffeinebot:
+    build:
+      context: .
+    volumes:
+      - ./files:/files
+      - ./cogs:/cogs
+    env_file:
+      - .env

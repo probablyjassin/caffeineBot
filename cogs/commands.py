@@ -1,11 +1,9 @@
 import os
-import requests
 import discord
-from discord import VoiceClient
+import psutil
 from discord.ext import commands
 from discord.utils import get
 from reddit import reddit
-from pytube import YouTube
 import re
 import aiohttp
 import asyncio
@@ -122,16 +120,20 @@ class commandos(commands.Cog):
             await ctx.send(f'{url}/2x.gif')
 
     @commands.command()
+    @commands.is_owner()
     async def clear(self, ctx: commands.Context, lim = 2):
         await ctx.channel.purge(limit=lim +1)
 
     @commands.command()
     async def hot(self, ctx: commands.Context):
-        output, _ = subprocess.Popen("/usr/bin/vcgencmd measure_temp", stdout=subprocess.PIPE, shell=True).communicate()
-        temp = float(re.findall("\d+\.\d+", output.decode("utf-8"))[0])
-        if temp >= 50: return await ctx.send(f"Pretty toasty, I'm sitting at about {temp}°C")
-        elif temp <= 40: await ctx.send(f"Wow, {temp}°C that's quite cool")
-        else: await ctx.send(f"{temp}°C, that's pretty ok")
+        temp = round(psutil.sensors_temperatures()['cpu_thermal'][0].current, 1)
+        if temp >= 50: 
+            message = f"Pretty toasty, I'm sitting at about {temp}°C"
+        elif temp <= 40:
+            message = f"Wow, {temp}°C that's quite cool"
+        else:
+            message = f"{temp}°C, that's pretty ok"
+        await ctx.send(message)
 
 def setup(bot: commands.Bot):
     bot.add_cog(commandos(bot))

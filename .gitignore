@@ -1,4 +1,4 @@
-./files/bavardage.txt
+files/bavardage.txt
 cogs/p-*
 .env
 __pycache__

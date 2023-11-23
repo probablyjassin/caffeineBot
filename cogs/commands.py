@@ -135,5 +135,9 @@ class commandos(commands.Cog):
             message = f"{temp}°C, that's pretty ok"
         await ctx.send(message)
 
+    @commands.command()
+    async def test(self, ctx: commands.Context):
+        await ctx.send("deez nuts")
+
 def setup(bot: commands.Bot):
     bot.add_cog(commandos(bot))

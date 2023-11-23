@@ -19,14 +19,7 @@ class gpt(commands.Cog):
     @commands.command()
     @commands.cooldown(5, 6000, commands.BucketType.user)
     async def gpt(self, ctx: commands.Context, *, message="briefly introduce yourself"):
-        response = requests.post(
-            f"{os.getenv('GPT_URL')}",
-            stream=True,
-            headers={
-                "Authorization": f"Bearer {os.getenv('GPT_TOKEN')}"
-            },
-            json={
-                "messages": [
+        messages = [
                     {
                         "role": "system",
                         "content": f"""
@@ -36,8 +29,27 @@ class gpt(commands.Cog):
                             Feel free to adress this user by their name: {ctx.message.author.display_name}
                         """,
                     },
-                    {"role": "user", "content": message},
-                ],
+                ]
+        context = []
+        async for msg in ctx.channel.history(limit=10, before=ctx.message):
+            role = "user"
+            if msg.author.name == "Caffeine":
+                role = "assistant"
+            context.append(
+                {"role": role, "content": msg.content}
+            )
+        for part in context[::-1]:
+            messages.append(part)
+        messages.append({"role": "user", "content": message})
+
+        response = requests.post(
+            f"{os.getenv('GPT_URL')}",
+            stream=True,
+            headers={
+                "Authorization": f"Bearer {os.getenv('GPT_TOKEN')}"
+            },
+            json={
+                "messages": messages,
                 "stream": True,
                 "model": "gpt-3.5-turbo",
                 "temperature": 0.5,
@@ -81,3 +93,7 @@ class gpt(commands.Cog):
 
 def setup(bot: commands.Bot):
     bot.add_cog(gpt(bot))
+
+
+[{'role': 'system', 'content': ""}, [{'role': 'user', 'content': 'Bin schon gespannt auf die nächste Ausgabe'}, 
+{'role': 'user', 'content': '.ping'}, {'role': 'assistant', 'content': 'pong'}, {'role': 'user', 'content': '.gpt what is one plus one'}, {'role': 'assistant', 'content': 'An error occured, OpenAi returned a 400 response'}], {'role': 'user', 'content': 'what does 1+1 equal to'}]

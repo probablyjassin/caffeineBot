@@ -29,10 +29,11 @@ class gpt(commands.Cog):
                 "messages": [
                     {
                         "role": "system",
-                        "content": """
+                        "content": f"""
                             You are Caffeine, a discord bot by Jässin.\n
                             You have various utility commands and can even stream music.\n
-                            Keep your answers about 2 sentences short unless if you're asked complex questions or code samples.
+                            Keep your answers about 2 sentences short unless if you're asked complex questions or code samples.\n
+                            Feel free to adress this user by their name: {ctx.message.author.display_name}
                         """,
                     },
                     {"role": "user", "content": message},

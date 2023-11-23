@@ -46,7 +46,7 @@ class gpt(commands.Cog):
             },
         )
 
-        message = await ctx.send("...")
+        message = await ctx.send("....")
         await message.add_reaction("〰️")
         text = ""
 

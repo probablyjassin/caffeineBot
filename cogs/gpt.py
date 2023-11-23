@@ -20,7 +20,7 @@ class gpt(commands.Cog):
     @commands.cooldown(5, 6000, commands.BucketType.user)
     async def gpt(self, ctx: commands.Context, *, message="briefly introduce yourself"):
         response = requests.post(
-            os.getenv('GPT_URL'),
+            f"os.getenv('GPT_URL')",
             stream=True,
             headers={
                 "Authorization": f"Bearer {os.getenv('GPT_TOKEN')}"

@@ -93,7 +93,3 @@ class gpt(commands.Cog):
 
 def setup(bot: commands.Bot):
     bot.add_cog(gpt(bot))
-
-
-[{'role': 'system', 'content': ""}, [{'role': 'user', 'content': 'Bin schon gespannt auf die nächste Ausgabe'}, 
-{'role': 'user', 'content': '.ping'}, {'role': 'assistant', 'content': 'pong'}, {'role': 'user', 'content': '.gpt what is one plus one'}, {'role': 'assistant', 'content': 'An error occured, OpenAi returned a 400 response'}], {'role': 'user', 'content': 'what does 1+1 equal to'}]

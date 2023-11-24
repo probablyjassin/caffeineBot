@@ -64,6 +64,7 @@ class gpt(commands.Cog):
         text = ""
 
         if response.status_code == 200:
+            cache = ""
             for chunk in response.iter_lines():
                 if chunk and chunk.decode("utf-8").startswith("data: {"):
                     obj: object = json.loads(
@@ -74,8 +75,11 @@ class gpt(commands.Cog):
                     )
 
                     if len(content):
-                        text += content
-                        await message.edit(content=text)
+                        cache += content
+                        if len(cache) > 5:
+                            text += cache
+                            cache = ""
+                            await message.edit(content=text)
         else:
             print(f"Error: {response.status_code}, {response.text}")
             await message.edit(

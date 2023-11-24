@@ -80,6 +80,8 @@ class gpt(commands.Cog):
                             text += cache
                             cache = ""
                             await message.edit(content=text)
+            if len(cache):
+                await message.edit(content=text+cache)
         else:
             print(f"Error: {response.status_code}, {response.text}")
             await message.edit(

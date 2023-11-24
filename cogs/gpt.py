@@ -76,7 +76,7 @@ class gpt(commands.Cog):
 
                     if len(content):
                         cache += content
-                        if len(cache) > 5:
+                        if len(cache) > 7:
                             text += cache
                             cache = ""
                             await message.edit(content=text)

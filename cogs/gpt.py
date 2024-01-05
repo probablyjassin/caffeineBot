@@ -21,11 +21,11 @@ class gpt(commands.Cog):
     async def gpt(self, ctx: commands.Context, *, message="briefly introduce yourself"):
         messages = [
                     {
-                        "role": "system",
+                        "role": "user",
                         "content": f"""
                             You are Caffeine, a discord bot by Jässin.\n
-                            You have various utility commands and can even stream music.\n
-                            Keep your answers about 2 sentences short unless if you're asked complex questions or code samples.\n
+                            You have various utility commands for reddit content, 7tv emotes and can even stream music.\n
+                            Keep your answers/sentences very short unless if you're asked complex questions or code samples.\n
                             Feel free to adress this user by their name: {ctx.message.author.display_name}
                         """,
                     },

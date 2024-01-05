@@ -3,6 +3,7 @@ services:
   caffeinebot:
     build:
       context: .
+      image: croncorp/python-ffmpeg:latest
     volumes:
       - ./files:/files
       - ./cogs:/cogs

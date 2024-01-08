@@ -8,7 +8,7 @@ class help(commands.Cog):
     @commands.command()
     async def help_ping(self, ctx: commands.Context):
         await ctx.send(embed = discord.Embed(
-            description = 'Bro "ping" "pong" was ist daran so schwer'
+            description = 'Bro "ping" "pong" was ist daran so schwer?'
         ))
 
     @commands.command()

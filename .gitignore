@@ -3,3 +3,4 @@ cogs/p-*
 .env
 __pycache__
 cogs/__pycache__/
+*test*.*

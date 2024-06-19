@@ -6,3 +6,4 @@ python-dotenv
 asyncpraw
 pytube
 psutil
+waifu-py

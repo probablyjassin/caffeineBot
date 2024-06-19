@@ -1,5 +1,5 @@
 import discord
-from discord import ApplicationContext, slash_command
+from discord import ApplicationContext, slash_command, Option
 from discord.ui import Button, View
 from discord.ext import commands
 
@@ -11,12 +11,15 @@ class test(commands.Cog):
 
     @slash_command(
         name="coolcommand",
-        description="Sends an embed with an image and a delete button."
+        description="Sends an embed with an image and a delete button.",
     )
-    async def coolcommand(self, ctx: ApplicationContext):
+    async def coolcommand(self, ctx: ApplicationContext, nsfw = Option(str, name="nsfw", choices=['yes'])):
         picture = ""
         async with WaifuAioClient() as client:
-            picture: str = await client.sfw(category='waifu')
+            if nsfw:
+                picture: str = await client.nsfw(category='waifu')
+            else:    
+                picture: str = await client.sfw(category='waifu')
 
         embed = discord.Embed(title="waifu")
         embed.set_image(url=picture)

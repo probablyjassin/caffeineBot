@@ -13,6 +13,7 @@ import seventv
 from seventv.seventv import seventvException
 import string
 import subprocess
+from asyncpraw import Reddit
 
 class commandos(commands.Cog):
     def __init__(self, bot):
@@ -38,7 +39,7 @@ class commandos(commands.Cog):
             if not arg:
                 return await ctx.send("Pick a subreddit")
             try:
-                subreddit: reddit.subreddit = await reddit.subreddit(arg)
+                subreddit: Reddit.subreddit = await reddit.subreddit(arg)
                 submission = random.choice([meme async for meme in subreddit.hot(limit=50)])
                 if submission.over_18 and not ctx.channel.is_nsfw(): return await ctx.send("We don't do that here, use an nsfw channel for that.")
             except:

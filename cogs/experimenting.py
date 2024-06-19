@@ -13,7 +13,7 @@ class test(commands.Cog):
         name="coolcommand",
         description="Sends an embed with an image and a delete button.",
     )
-    async def coolcommand(self, ctx: ApplicationContext, nsfw = Option(str, name="nsfw", choices=['yes'])):
+    async def coolcommand(self, ctx: ApplicationContext, nsfw = Option(str, name="nsfw", choices=['yes'], required=False)):
         picture = ""
         async with WaifuAioClient() as client:
             if nsfw:

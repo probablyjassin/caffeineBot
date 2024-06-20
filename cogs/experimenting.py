@@ -30,7 +30,7 @@ class test(commands.Cog):
         view.add_item(delete_button)
 
         async def button_callback(interaction: discord.Interaction):
-            if interaction.user == ctx.author:
+            if interaction.user == ctx.author or ctx.author.guild_permissions.administrator:
                 await interaction.response.send_message("Image deleted!", ephemeral=True)
                 await msg.delete()
             else:

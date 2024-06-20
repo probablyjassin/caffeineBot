@@ -144,7 +144,7 @@ class commandos(commands.Cog):
     async def uwu(self, ctx: commands.Context, *text):
         if not text: return await ctx.send_help()
         async with self.httpSession.get(f"https://uwuify.helba.ai/?uwu={text}") as response:
-            await ctx.send((await response.text()))
+            await ctx.send((await response.json()))
 
 def setup(bot: commands.Bot):
     bot.add_cog(commandos(bot))

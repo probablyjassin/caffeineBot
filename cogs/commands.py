@@ -143,8 +143,11 @@ class commandos(commands.Cog):
     @commands.command()
     async def uwu(self, ctx: commands.Context, *text):
         if not text: return await ctx.send_help()
-        async with self.httpSession.get(f"https://uwuify.helba.ai/?uwu={text}") as response:
-            await ctx.send((await response.text().strip("(')")))
+        async with self.httpSession as client:
+            content = (await (await client.get(f"https://uwuify.helba.ai/?uwu={text}")).text())
+            for char in ["(", ")", "'", ","]:
+                content = content.replace(char, "")
+            await ctx.send(content)
 
 def setup(bot: commands.Bot):
     bot.add_cog(commandos(bot))

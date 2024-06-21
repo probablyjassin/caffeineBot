@@ -7,3 +7,5 @@ asyncpraw
 pytube
 psutil
 waifu-py
+fuzzywuzzy
+python-Levenshtein
